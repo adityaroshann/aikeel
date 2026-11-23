@@ -2,6 +2,8 @@
 
 **Onboard any shipyard in an afternoon, not a quarter.**
 
+Live: https://aikeel.vercel.app · Code: https://github.com/adityaroshann/aikeel
+
 ## Problem
 Software that checks ship designs for errors has to read each customer's own data. Every shipyard and design office keeps that data differently:
 - **Equipment lists:** CSV or Excel, with title blocks, and in kg, tonnes or pounds.
@@ -26,6 +28,8 @@ Clear cases are handled offline by heuristics. Low-confidence decisions can opti
 - **Planted errors:** the same check code finds exactly the 5 planted errors for each customer.
 - **Zero code changes:** onboarding a new customer produces one YAML file and changes no engine code. A test verifies this by hashing the engine before and after.
 - **Speed:** a new customer is proposed in about a second.
+- **Ask AIkeel copilot:** Claude with tool access to the engine explains findings and drafts profile changes. Each change shows its effect on the findings, and an engineer approves or rejects it.
+- **Deployed:** a Next.js web app and a FastAPI engine API, live on Vercel. 19 automated tests.
 
 ## Who it's for
 - Ship-design and design-review software vendors that onboard yards and design offices.
@@ -44,4 +48,4 @@ Clear cases are handled offline by heuristics. Low-confidence decisions can opti
 ## Next steps
 - Pilot with real (anonymised) drawings from a local design office.
 - Add DWG support, class-society rule packs and more check types.
-- Test the Claude second-opinion path on real ambiguous cases.
+- Let the copilot draft fixes to the source files (list and drawing), not only to the profile.
