@@ -1,0 +1,22 @@
+Tag,Desc,Room,Weight_kg
+E-101,Main Engine,Engine Room,18000
+G-101,Diesel Generator No.1,Engine Room,4500
+G-102,Diesel Generator No.2,Engine Room,4500
+S-101,Fuel Oil Purifier,Engine Room,900
+S-102,Lube Oil Purifier,Engine Room,850
+C101,Starting Air Compressor No.1,Engine Room,350
+C-102,Starting Air Compressor No.2,Engine Room,350
+P-101,Fuel Oil Transfer Pump,Engine Room,220
+P-102,Lube Oil Transfer Pump,Engine Room,180
+F-101,ER Supply Fan,Engine Room,300
+F-102,ER Exhaust Fan,Engine Room,300
+P-103,Bilge Pump,Pump Room,260
+P-104,Fire Pump,Pump Room,410
+P-105,Ballast Pump,Pump Room,520
+S-103,Oily Water Separator,Pump Room,650
+U-101,Fresh Water Generator,Pump Room,1200
+U-102,Steering Gear Hydraulic Unit,Steering Gear Room,2800
+G-103,Emergency Generator,Emergency Generator Room,2200
+U-103,HVAC Unit,Accommodation,1500
+U-104,Sewage Treatment Plant,Accommodation,1100
+P-102,Lube Oil Transfer Pump (standby),Engine Room,180

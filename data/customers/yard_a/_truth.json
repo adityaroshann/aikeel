@@ -1,0 +1,56 @@
+{
+  "title": "Yard A (shipyard)",
+  "profile": {
+    "format": "csv",
+    "delimiter": ",",
+    "header_row": 0,
+    "columns": {
+      "tag": [
+        "Tag",
+        1.0
+      ],
+      "name": [
+        "Desc",
+        1.0
+      ],
+      "space": [
+        "Room",
+        1.0
+      ],
+      "mass_kg": [
+        "Weight_kg",
+        1.0
+      ]
+    },
+    "tag_pattern": "^[A-Z]-\\d{3}$",
+    "layer": "EQ-MECH",
+    "source": "text",
+    "attribute": null
+  },
+  "rule": {
+    "limit_kg": 28000,
+    "space": "Engine Room"
+  },
+  "findings": [
+    [
+      "duplicate_tag",
+      "P-102"
+    ],
+    [
+      "missing_from_list",
+      "U-105"
+    ],
+    [
+      "missing_on_drawing",
+      "P-104"
+    ],
+    [
+      "rule:max_total_mass_per_space",
+      "Engine Room"
+    ],
+    [
+      "tag_convention",
+      "C101"
+    ]
+  ]
+}

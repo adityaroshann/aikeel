@@ -1,0 +1,56 @@
+{
+  "title": "Customer C (onboarded live in the demo)",
+  "profile": {
+    "format": "csv",
+    "delimiter": ";",
+    "header_row": 0,
+    "columns": {
+      "tag": [
+        "Equipment ID",
+        1.0
+      ],
+      "name": [
+        "Name",
+        1.0
+      ],
+      "space": [
+        "Compartment",
+        1.0
+      ],
+      "mass_kg": [
+        "Weight (lbs)",
+        0.45359237
+      ]
+    },
+    "tag_pattern": "^[A-Z]{2}-[A-Z]{2}-\\d{4}$",
+    "layer": "Machinery",
+    "source": "mtext",
+    "attribute": null
+  },
+  "rule": {
+    "limit_kg": 27215.5422,
+    "space": "Engine Room"
+  },
+  "findings": [
+    [
+      "duplicate_tag",
+      "ER-PM-0009"
+    ],
+    [
+      "missing_from_list",
+      "PR-UN-0021"
+    ],
+    [
+      "missing_on_drawing",
+      "PR-PM-0013"
+    ],
+    [
+      "rule:max_total_mass_per_space",
+      "Engine Room"
+    ],
+    [
+      "tag_convention",
+      "ER-CM-06"
+    ]
+  ]
+}

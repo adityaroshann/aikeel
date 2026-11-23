@@ -1,0 +1,56 @@
+{
+  "title": "Office B (design office)",
+  "profile": {
+    "format": "xlsx",
+    "delimiter": ",",
+    "header_row": 3,
+    "columns": {
+      "tag": [
+        "Item No.",
+        1.0
+      ],
+      "name": [
+        "Description",
+        1.0
+      ],
+      "space": [
+        "Location",
+        1.0
+      ],
+      "mass_kg": [
+        "Mass (t)",
+        1000.0
+      ]
+    },
+    "tag_pattern": "^\\d{3}\\.\\d{2}-[A-Z]{3}-\\d{2}$",
+    "layer": "M_EQUIP",
+    "source": "attrib",
+    "attribute": "TAG"
+  },
+  "rule": {
+    "limit_kg": 25000,
+    "space": null
+  },
+  "findings": [
+    [
+      "duplicate_tag",
+      "722.02-PMP-02"
+    ],
+    [
+      "missing_from_list",
+      "872.01-UNT-05"
+    ],
+    [
+      "missing_on_drawing",
+      "811.01-PMP-04"
+    ],
+    [
+      "rule:max_total_mass_per_space",
+      "ENG RM"
+    ],
+    [
+      "tag_convention",
+      "751.1-CMP-01"
+    ]
+  ]
+}

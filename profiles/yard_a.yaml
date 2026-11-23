@@ -1,0 +1,35 @@
+customer: yard_a
+equipment_list:
+  file: equipment_list.csv
+  format: csv
+  delimiter: ','
+  sheet: null
+  header_row: 0
+  columns:
+    tag:
+      source: Tag
+      scale: 1.0
+    name:
+      source: Desc
+      scale: 1.0
+    space:
+      source: Room
+      scale: 1.0
+    mass_kg:
+      source: Weight_kg
+      scale: 1.0
+tag_convention:
+  pattern: ^[A-Z]-\d{3}$
+  example: E-101
+drawing:
+  file: ga_drawing.dxf
+  layer: EQ-MECH
+  source: text
+  attribute: null
+rules:
+- id: YS-4.2
+  type: max_total_mass_per_space
+  limit_kg: 28000.0
+  space: Engine Room
+  source_text: YS-4.2  Total installed equipment mass in the Engine Room shall not
+    exceed 28 t.

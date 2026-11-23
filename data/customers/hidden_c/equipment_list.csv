@@ -1,0 +1,22 @@
+Equipment ID;Name;Compartment;Weight (lbs);Remarks
+ER-EN-0001;Main Engine;Engine Room;39,683;
+ER-GE-0002;Diesel Generator No.1;Engine Room;9,921;
+ER-GE-0003;Diesel Generator No.2;Engine Room;9,921;
+ER-SE-0004;Fuel Oil Purifier;Engine Room;1,984;
+ER-SE-0005;Lube Oil Purifier;Engine Room;1,874;
+ER-CM-06;Starting Air Compressor No.1;Engine Room;772;
+ER-CM-0007;Starting Air Compressor No.2;Engine Room;772;
+ER-PM-0008;Fuel Oil Transfer Pump;Engine Room;485;
+ER-PM-0009;Lube Oil Transfer Pump;Engine Room;397;
+ER-FA-0010;ER Supply Fan;Engine Room;661;
+ER-FA-0011;ER Exhaust Fan;Engine Room;661;
+PR-PM-0012;Bilge Pump;Pump Room;573;
+PR-PM-0013;Fire Pump;Pump Room;904;
+PR-PM-0014;Ballast Pump;Pump Room;1,146;
+PR-SE-0015;Oily Water Separator;Pump Room;1,433;
+PR-UN-0016;Fresh Water Generator;Pump Room;2,646;
+SG-UN-0017;Steering Gear Hydraulic Unit;Steering Gear Room;6,173;
+EG-GE-0018;Emergency Generator;Emergency Generator Room;4,850;
+AC-UN-0019;HVAC Unit;Accommodation;3,307;
+AC-UN-0020;Sewage Treatment Plant;Accommodation;2,425;
+ER-PM-0009;Lube Oil Transfer Pump (standby);Engine Room;397;
