@@ -3,3 +3,8 @@ __pycache__/
 .pytest_cache/
 *.pyc
 .env
+.vercel/
+.env*
+!.env.example
+node_modules/
+.next/

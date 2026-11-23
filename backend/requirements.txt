@@ -1,3 +1,4 @@
+fastapi>=0.115
 anthropic>=2.10
 ezdxf>=1.4
 pydantic>=2
@@ -5,6 +6,3 @@ pyyaml
 openpyxl
 rapidfuzz
 pandas
-streamlit>=1.40
-matplotlib
-pytest

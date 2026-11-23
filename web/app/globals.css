@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+:root {
+  --film: #edf0ec;
+  --film-deep: #e2e7e2;
+  --sheet: #f7f8f5;
+  --ink: #14283a;
+  --steel: #5d6b76;
+  --grid: #cbd3cf;
+  --red: #b5352a;
+  --amber: #c98a1b;
+  --sea: #2f6f5e;
+}
+
+@theme inline {
+  --color-film: var(--film);
+  --color-film-deep: var(--film-deep);
+  --color-sheet: var(--sheet);
+  --color-ink: var(--ink);
+  --color-steel: var(--steel);
+  --color-grid: var(--grid);
+  --color-red: var(--red);
+  --color-amber: var(--amber);
+  --color-sea: var(--sea);
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+}
+
+html { background: var(--film); color: var(--ink); }
+body { background: var(--film); color: var(--ink); font-family: var(--font-sans); }
+
+/* drawing lettering: condensed, heavy, tight */
+.lettering { font-variation-settings: "wdth" 66; font-weight: 800; letter-spacing: -0.01em; line-height: 0.95; }
+.lettering-soft { font-variation-settings: "wdth" 82; font-weight: 650; letter-spacing: -0.005em; }
+
+/* drafting-film grid, used only on drawing surfaces */
+.film-grid {
+  background-color: var(--sheet);
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--grid) 55%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--grid) 55%, transparent) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+@keyframes ping-ring { 0% { r: 1.4; opacity: 0.9; } 100% { r: 4.6; opacity: 0; } }
+.finding-ping { animation: ping-ring 1.8s ease-out infinite; }
+@keyframes caret { 50% { opacity: 0; } }
+.caret::after { content: "\258D"; animation: caret 1s steps(1) infinite; margin-left: 1px; }
+@keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.rise { animation: rise 0.35s ease-out both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .finding-ping, .caret::after, .rise { animation: none; }
+}

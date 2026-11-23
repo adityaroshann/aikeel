@@ -1,49 +1,68 @@
-# ⚓ AIkeel: onboard any shipyard in an afternoon, not a quarter
+# ⚓ AIkeel: onboard any shipyard's data without new code
 
-> Built for **Genesis T-Minus30**. AIkeel is a mock startup and a working prototype, and it uses synthetic data.
+> A prototype built for **Genesis T-Minus30** in St. John's, Newfoundland. All data is synthetic.
 
-**In one line:** AIkeel reads a new shipbuilding customer's messy files, proposes how that customer does things, has an engineer approve it, and then runs the same design-checking engine for every customer, with zero custom code.
+Software that checks ship designs has to read each customer's own files, and every shipyard keeps them differently: CSV or Excel, kg or tonnes or pounds, `P-101` or `721.01-PMP-02` or `ER-PU-0007`, tags stored as text or MTEXT or block attributes, and its own design standards. Usually every new customer means custom integration code.
 
-**Problem.** Every yard and design office describes the same ship differently:
-- different equipment-list spreadsheets, columns, units and header layouts
-- different tagging conventions (`P-101` vs `721.01-PMP-02` vs `ER-PU-0007`)
-- different CAD layer names and ways of storing tags (plain text, MTEXT, block attributes)
-- different internal design standards
+**AIkeel turns onboarding into one reviewed config file:**
 
-If each difference turns into custom code, every new customer costs engineering time and forks the codebase.
+1. **Upload.** Send in the customer's equipment list, GA drawing (DXF) and standards note.
+2. **Propose.** The Onboarding Autopilot infers the format, columns, units, tag convention, drawing layer and weight rules. Each decision comes with evidence and a confidence score.
+3. **Approve.** An engineer reviews and approves one YAML profile.
+4. **Review.** The same check engine runs for every customer. It finds equipment missing from the list or the drawing, duplicate tags, broken tag conventions and overweight spaces.
 
-**Approach.**
-1. **Canonical model** (`keel/ontology.py`). The checks only ever see this.
-2. **Customer profile** (`profiles/<customer>.yaml`). The *only* per-customer artifact: plain, reviewable, versionable YAML that can live on-prem next to the customer's data.
-3. **Onboarding Autopilot** (`keel/infer.py`, the AIkeel engine). Proposes the profile from sample files. Each decision comes with a confidence score and evidence. Heuristics run first, offline. Claude is optional and only sees low-confidence decisions. **An engineer approves every decision.**
-4. **Generic checks** (`keel/checks.py`). They run unchanged for every customer:
-   - list ↔ drawing consistency
-   - duplicate tags
-   - the customer's own tag convention
-   - the customer's own weight limits, parsed from their standards note
+**Ask AIkeel** is a Claude copilot with tool access to the engine. It explains findings and drafts profile changes. Each change is shown with its effect on the findings, and nothing is applied until an engineer approves it.
+
+## Architecture
 
 ```
-customer files ──► Autopilot ──► proposed profile ──► engineer review ──► approved profile.yaml
-                                                                              │
-customer files ──► adapters (driven by profile) ──► canonical model ──► generic checks ──► findings
+web/  Next.js (Vercel)  ──fetch / SSE──►  backend/  FastAPI (Vercel Python)
+  landing page                               server/   API, copilot agent loop
+  /app workspace:                            keel/     the engine (unchanged per customer)
+    onboard · design review (SVG GA)           infer.py   profile inference
+    config-not-code · Ask AIkeel               checks.py  generic checks
+                                               geometry.py  DXF → JSON for the browser
+                                             data/     three synthetic customers
 ```
 
-## Run it
+- **Stateless API.** Uploaded files travel with each request and are deleted afterwards. Approved profiles live in the browser.
+- **Offline first.** Inference heuristics need no network. Claude is optional, both for the second opinion on low-confidence decisions and for the copilot.
+- **Copilot tools:**
+  - `list_findings`
+  - `get_equipment`
+  - `space_mass_report`
+  - `explain_profile_decision`
+  - `what_if` (a dry run)
+  - `propose_profile_change` (returns a proposal and never applies it)
+
+## Run locally
+
 ```bash
-python -m venv .venv && .venv\Scripts\activate
-pip install -r requirements.txt
-python scripts/make_sample_data.py      # 3 synthetic customers with planted errors
-pytest -q                               # 11 tests: inference matches ground truth, checks find exactly the planted errors
-streamlit run app.py
+# API
+cd backend
+python -m venv .venv && .venv\Scripts\activate      # macOS/Linux: source .venv/bin/activate
+pip install -r requirements-dev.txt
+set ANTHROPIC_API_KEY=...                             # optional, enables the copilot
+uvicorn main:app --reload --port 8000
+pytest -q                                             # 19 tests
+
+# Web
+cd web
+npm install
+npm run dev                                           # http://localhost:3000 (expects the API on :8000)
 ```
-Optional: set `ANTHROPIC_API_KEY` (or paste a key in the sidebar) to send low-confidence decisions to Claude.
+
+`NEXT_PUBLIC_API_URL` points the web app at a deployed API. On the API, `AIKEEL_WEB_ORIGINS` (comma-separated) or `AIKEEL_WEB_ORIGIN_REGEX` sets CORS, and `AIKEEL_MODEL` / `AIKEEL_EFFORT` tune the copilot.
+
+The original Streamlit prototype still works offline: `cd backend && streamlit run streamlit_app.py`.
 
 ## What the tests prove
-- For all three customers, the inferred profile matches ground truth: format, delimiter, header row, column mapping, unit conversion, tag pattern, drawing layer and storage type, weight rule.
-- The same check code finds **exactly** the 5 planted errors for every customer.
-- Onboarding a new customer produces one YAML file and changes **zero** engine files (checked by hashing `keel/`).
+- For all three customers, the inferred profile matches ground truth.
+- The same check code finds exactly the 5 planted errors for every customer, whether the files are bundled or uploaded.
+- Onboarding a new customer changes **zero** engine files (checked by hashing `keel/`).
+- The copilot's proposal round-trip resolves the expected finding without changing the approved profile (tested against a scripted fake Claude client, so no API credits are spent).
 
 ## Honest limits
-- Data is synthetic (an 85 m OSV-like layout). Real GA drawings have xrefs, nested blocks and DWG files, and a lot of the information lives in 3D models.
-- Covers one document pair (equipment list ↔ GA) and one rule type. The profile pattern extends to PLM metadata, class-rule packs and more check types.
-- Not affiliated with any company. Independent project built for Genesis T-Minus30.
+- The data is synthetic (an 85 m OSV-like layout). Real GA drawings have xrefs, nested blocks and DWG files, and much of the information lives in 3D models.
+- It covers one document pair (equipment list ↔ GA) and one rule type.
+- It's an independent project and not affiliated with any company.

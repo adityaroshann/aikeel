@@ -1,4 +1,4 @@
-"""AIkeel demo UI.  Run:  streamlit run app.py"""
+"""AIkeel demo UI.  Run:  streamlit run streamlit_app.py"""
 from __future__ import annotations
 
 import hashlib

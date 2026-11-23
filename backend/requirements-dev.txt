@@ -1,0 +1,6 @@
+-r requirements.txt
+uvicorn
+httpx
+pytest
+streamlit>=1.40
+matplotlib
